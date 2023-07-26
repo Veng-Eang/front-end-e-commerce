@@ -3,6 +3,8 @@ import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/services/product.service';
 import {ActivatedRoute} from '@angular/router';
 import { Observable } from 'rxjs';
+import { CartService } from 'src/app/services/cart.service';
+import { CartItem } from 'src/app/common/cart-item';
 
 @Component({
   selector: 'app-product-list',
@@ -23,6 +25,7 @@ export class ProductListComponent implements OnInit {
   previousKeyword: string='';
 
   constructor(private productService: ProductService,
+              private cartService:CartService,
               private route: ActivatedRoute ) { }
 
   ngOnInit(): void {
@@ -109,6 +112,7 @@ export class ProductListComponent implements OnInit {
     this.listProducts();
   }
   addToCart(product:Product){
-    console.log(`product id :${product.id} prouduct name: ${product.name} unitprice: ${product.unitPrice}`)
+    const theCartItem=new CartItem(product);
+    this.cartService.addToCart(theCartItem);
   }
 }
